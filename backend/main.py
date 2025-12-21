@@ -957,8 +957,7 @@ class SCManager:
             is_simple_item = is_armor or is_melee or is_flair or is_gadget or is_mining or is_food or is_decor
             
             if is_simple_item:
-                print(f"[Blueprint Export] Detected simple item (armor/food/decor). Using legacy export.")
-                return self.export_item(guid)
+                print(f"[Blueprint Export] Detected simple item (armor/food/decor). Proceeding with blueprint auto-conversion.")
             
             # Let scdatatools handle extraction - it knows what parts belong to this item
             # No manual loadout filtering needed
