@@ -123,11 +123,17 @@ if (-not $?) {
     exit 1
 }
 
-# Double check scdatatools specifically
-$checkSC = & $VenvPython -c "import scdatatools; print('ok')" 2>&1
-if ($LASTEXITCODE -ne 0) {
-    Write-Log "ERROR: scdatatools failed to install properly." $Red
-    Write-Log "Trying to force install it..." $Yellow
+# Double check scdatatools specifically (don't let trap catch this)
+Write-Log "Verifying scdatatools installation..." $Yellow
+$ErrorActionPreference = "Continue"  # Temporarily disable trap
+& $VenvPython -c "import scdatatools; print('scdatatools OK')"
+$scResult = $LASTEXITCODE
+$ErrorActionPreference = "Stop"  # Re-enable trap
+
+if ($scResult -ne 0) {
+    Write-Log "ERROR: scdatatools import failed. See error above." $Red
+    Write-Log "This usually means a dependency version conflict." $Yellow
+    Write-Log "Trying to force reinstall..." $Yellow
     & $PipExec install "git+https://gitlab.com/scmodding/frameworks/scdatatools.git@devel" --force-reinstall
     if (-not $?) {
         Write-Log "Still failed. Please check your internet/git connection." $Red
