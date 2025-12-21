@@ -1067,13 +1067,24 @@ class SCManager:
                 if hasattr(geom_data, 'transform'):
                     transform = np.array(geom_data.transform).reshape(4,4)
                 
+                # Convert Scene to single Trimesh if needed
                 if isinstance(mesh, trimesh.Scene):
+                    # Apply transform to scene, then convert to single mesh
                     mesh.apply_transform(transform)
-                    merged_meshes.append(mesh)
+                    # Dump all geometry and concatenate into single mesh
+                    geometries = list(mesh.geometry.values())
+                    if geometries:
+                        mesh = trimesh.util.concatenate(geometries)
+                    else:
+                        print(f"  [Warning] Scene has no geometry: {geom_key}")
+                        continue
                 elif isinstance(mesh, trimesh.Trimesh):
                     mesh.apply_transform(transform)
-                    merged_meshes.append(mesh)
+                else:
+                    print(f"  [Warning] Unknown mesh type: {type(mesh)}")
+                    continue
                     
+                merged_meshes.append(mesh)
             except Exception as e:
                 print(f"  [Error] Failed to load/transform {geom_key}: {e}")
 

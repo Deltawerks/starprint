@@ -7,6 +7,8 @@ StarPrint is a tool designed to extract clean, printable 3D models from Star Cit
 > **Status:** Alpha/Testing
 > **Focus:** 3D Printing (No textures, no animation, minimal cleaning required)
 
+> ⚠️ **Important:** StarPrint currently only works with **Star Citizen 4.2 and earlier** Data.p4k files. SC 4.5+ introduced new file formats that are not yet supported by upstream tools (cgf-converter, scdatatools). See [cgf-converter #225](https://github.com/Markemp/Cryengine-Converter/issues/225) for updates.
+
 ## 🚀 Features
 
 -   **Personal Items:** Armor sets, FPS weapons, melee weapons, gadgets, flair, decorations, and more.
@@ -37,7 +39,7 @@ StarPrint is a tool designed to extract clean, printable 3D models from Star Cit
 ### 1. Browse & Generate Thumbnails
 *   Navigate using the sidebar categories (Armor, Weapons, Ships, etc.).
 *   **Pro Tip:** Categories start empty/with cube icons. To see what you're looking at:
-    *   Click the 📷 **Camera Icon** next to a category name.
+    *   Click the 👁️ **Eye Icon** next to a category name.
     *   Wait! The server will export and render each item in the background. (Check the terminal window for progress).
     *   Once done, you'll have a permanent visual library of that category.
 
@@ -58,6 +60,7 @@ See [DEVELOPER_NOTES.md](DEVELOPER_NOTES.md) for a deep dive into the architectu
 
 ## ⚠️ Known Issues
 
+*   **SC 4.5+ Not Supported:** Star Citizen 4.5 introduced new file formats (.cgf version changes) that the upstream tools cannot yet parse. Use a pre-4.5 Data.p4k backup.
 *   **Export Speed:** Complex items can take 30+ seconds to process.
 *   **Memory:** Massive ships (Reclaimer, 890 Jump) might crash specifically on 16GB RAM machines during the merge process.
 *   **Duplicates:** Some texture variants might still sneak through the filter.

@@ -121,7 +121,7 @@ function renderCategoryTree(cats, container) {
         if (cat.leaf && cat.path) {
             const thumbBtn = document.createElement('button');
             thumbBtn.className = 'thumb-gen-btn';
-            thumbBtn.innerHTML = '<i class="fa-solid fa-camera"></i>';
+            thumbBtn.innerHTML = '<i class="fa-solid fa-eye"></i>';
             thumbBtn.title = 'Generate thumbnails for this category';
             thumbBtn.addEventListener('click', async (e) => {
                 e.stopPropagation();
@@ -158,7 +158,7 @@ function renderCategoryTree(cats, container) {
                     alert('Thumbnail generation failed. Check console for details.');
                 } finally {
                     setTimeout(() => {
-                        thumbBtn.innerHTML = '<i class="fa-solid fa-camera"></i>';
+                        thumbBtn.innerHTML = '<i class="fa-solid fa-eye"></i>';
                         thumbBtn.disabled = false;
                         thumbBtn.classList.remove('success');
                     }, 3000);
@@ -233,7 +233,6 @@ async function loadItems(path) {
                 </div>
                 <div class="card-footer">
                     <div class="item-name">${item.name}</div>
-                    <div class="item-code">${item.type || ''}</div>
                 </div>
             `;
             card.addEventListener('click', () => selectItem(item));
