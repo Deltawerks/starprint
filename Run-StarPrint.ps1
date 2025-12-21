@@ -123,6 +123,10 @@ if (-not $?) {
     exit 1
 }
 
+# Install missing dependency that scdatatools needs but doesn't declare
+Write-Log "Installing missing scdatatools dependency..." $Yellow
+& $PipExec install line_profiler --quiet
+
 # Double check scdatatools specifically (don't let trap catch this)
 Write-Log "Verifying scdatatools installation..." $Yellow
 $ErrorActionPreference = "Continue"  # Temporarily disable trap
