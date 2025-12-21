@@ -7,12 +7,17 @@ import os
 import asyncio
 import subprocess
 import shutil
+import logging
 from pathlib import Path
 from collections import defaultdict
 import tempfile
 import re
 import trimesh
 import numpy as np
+
+# Suppress noisy scdatatools logging (they log at ERROR for unsupported chunk types)
+logging.getLogger("scdatatools").setLevel(logging.CRITICAL)
+logging.getLogger("scdatatools.engine.chunkfile").setLevel(logging.CRITICAL)
 
 # Import thumbnail rendering
 try:
