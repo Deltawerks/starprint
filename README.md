@@ -61,6 +61,7 @@ See [DEVELOPER_NOTES.md](DEVELOPER_NOTES.md) for a deep dive into the architectu
 ## ⚠️ Known Issues
 
 *   **SC 4.5+ Not Supported:** Star Citizen 4.5 introduced new file formats (.cgf version changes) that the upstream tools cannot yet parse. Use a pre-4.5 Data.p4k backup.
+*   **Disk Space:** The `exports/` folder can grow **very large** (multiple GB) after extracting several items. Each item extracts raw assets before conversion. Clear this folder periodically to reclaim space.
 *   **Export Speed:** Complex items can take 30+ seconds to process.
 *   **Memory:** Massive ships (Reclaimer, 890 Jump) might crash specifically on 16GB RAM machines during the merge process.
 *   **Duplicates:** Some texture variants might still sneak through the filter.
