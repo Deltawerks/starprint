@@ -14,7 +14,17 @@
 $ErrorActionPreference = "Stop"
 
 trap {
-    Write-Host "AN ERROR OCCURRED: $_" -ForegroundColor Red
+    Write-Host ""
+    Write-Host "========================================" -ForegroundColor Red
+    Write-Host "AN ERROR OCCURRED" -ForegroundColor Red
+    Write-Host "========================================" -ForegroundColor Red
+    Write-Host "Error: $_" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "Details:" -ForegroundColor Yellow
+    Write-Host $_.ScriptStackTrace -ForegroundColor Gray
+    Write-Host ""
+    Write-Host "If this is a Python error, scroll up to see the full traceback." -ForegroundColor Cyan
+    Write-Host "========================================" -ForegroundColor Red
     Pause
     exit 1
 }
