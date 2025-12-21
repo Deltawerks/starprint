@@ -8,7 +8,7 @@
 
 .NOTES
     Author: Gemini
-    Date: 2025-12-20
+    Date: 2025-12-21
 #>
 
 $ErrorActionPreference = "Stop"
@@ -41,23 +41,37 @@ function Test-Command {
     try {
         Get-Command $Name -ErrorAction Stop | Out-Null
         return $true
-    } catch {
+    }
+    catch {
         return $false
     }
 }
 
 Write-Log "=== StarPrint - SC 3D Print Extractor ===" $Green
 
-# 1. Check for Python
+# 1. Check for Git (REQUIRED for scdatatools)
+if (-not (Test-Command "git")) {
+    Write-Log "Error: Git is not installed or not in your PATH." $Red
+    Write-Log "StarPrint requires Git to download core libraries." $Yellow
+    Write-Log "Please install Git for Windows: https://git-scm.com/download/win" $Yellow
+    Write-Log "IMPORTANT: Select 'Git from the command line and also from 3rd-party software' during install." $Yellow
+    Pause
+    exit 1
+}
+Write-Log "Git found." $Green
+
+# 2. Check for Python
 Write-Log "Checking for Python..." $Yellow
 try {
     $PyVersion = & $PythonExec --version 2>&1
     if ($PyVersion -match "3\.(10|11|12|13)") {
         Write-Log "Found $PyVersion" $Green
-    } else {
+    }
+    else {
         throw "Python 3.10+ not found. Found: $PyVersion"
     }
-} catch {
+}
+catch {
     Write-Log "Python 3.10 or newer not found." $Red
     Write-Log "Please install Python from: https://python.org" $Yellow
     Write-Log "Make sure to check 'Add Python to PATH' during installation." $Yellow
@@ -65,7 +79,7 @@ try {
     exit 1
 }
 
-# 2. Create Virtual Environment
+# 3. Create Virtual Environment
 if (-not (Test-Path $VenvDir)) {
     Write-Log "Creating virtual environment in .venv..." $Yellow
     & $PythonExec -m venv $VenvDir
@@ -75,34 +89,46 @@ if (-not (Test-Path $VenvDir)) {
         exit 1
     }
     Write-Log "Virtual environment created." $Green
-} else {
+}
+else {
     Write-Log "Virtual environment already exists." $Green
 }
 
-# 3. Install Dependencies
+# 4. Install Dependencies
 Write-Log "Installing dependencies (this may take a few minutes on first run)..." $Yellow
 
 # Upgrade pip first
 $VenvPython = Join-Path $VenvDir "Scripts/python.exe"
 & $VenvPython -m pip install --upgrade pip --quiet 2>$null
 
-# Install requirements
-& $PipExec install -r (Join-Path $ScriptDir "requirements.txt") --quiet 2>$null
+# Install requirements (VERBOSELY)
+& $PipExec install -r (Join-Path $ScriptDir "requirements.txt")
 if (-not $?) {
-    Write-Log "Warning: Some packages may have had issues." $Yellow
-    Write-Log "Continuing anyway..." $Yellow
+    Write-Log "ERROR: Failed to install dependencies." $Red
+    Write-Log "Common issues:" $Yellow
+    Write-Log "1. Git not installed correctly (reinstall Git for Windows)" $Yellow
+    Write-Log "2. Firewall blocking pip/git" $Yellow
+    Write-Log "3. Python version mismatch" $Yellow
+    Pause
+    exit 1
 }
 
-# Verify critical packages
-$uvicornCheck = & $VenvPython -c "import uvicorn" 2>&1
+# Double check scdatatools specifically
+$checkSC = & $VenvPython -c "import scdatatools; print('ok')" 2>&1
 if ($LASTEXITCODE -ne 0) {
-    Write-Log "Failed to install uvicorn. Trying again..." $Yellow
-    & $PipExec install uvicorn fastapi --quiet
+    Write-Log "ERROR: scdatatools failed to install properly." $Red
+    Write-Log "Trying to force install it..." $Yellow
+    & $PipExec install "git+https://gitlab.com/scmodding/frameworks/scdatatools.git@devel" --force-reinstall
+    if (-not $?) {
+        Write-Log "Still failed. Please check your internet/git connection." $Red
+        Pause
+        exit 1
+    }
 }
 
-Write-Log "Dependencies installed." $Green
+Write-Log "Dependencies installed and verified." $Green
 
-# 4. Download cgf-converter if not present
+# 5. Download cgf-converter if not present
 if (-not (Test-Path $ToolsDir)) {
     New-Item -ItemType Directory -Path $ToolsDir -Force | Out-Null
 }
@@ -115,17 +141,19 @@ if (-not (Test-Path $CgfConverterPath)) {
         [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
         Invoke-WebRequest -Uri $CgfConverterUrl -OutFile $CgfConverterPath -UseBasicParsing
         Write-Log "cgf-converter.exe downloaded successfully." $Green
-    } catch {
+    }
+    catch {
         Write-Log "Warning: Failed to download cgf-converter.exe." $Yellow
         Write-Log "Please download manually from: https://github.com/Markemp/Cryengine-Converter/releases" $Yellow
     }
-} else {
+}
+else {
     Write-Log "cgf-converter.exe already present." $Green
 }
 
 Write-Log "Setup complete!" $Green
 
-# 5. Start the server
+# 6. Start the server
 Write-Log "---------------------------------------------------"
 Write-Log "Starting StarPrint server..." $Green
 Write-Log "Opening browser at http://localhost:8000" $Yellow

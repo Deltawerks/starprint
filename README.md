@@ -19,6 +19,7 @@ StarPrint is a tool designed to extract clean, printable 3D models from Star Cit
 -   **OS:** Windows 10 or 11
 -   **Game:** Star Citizen installed (LIVE or PTU)
 -   **Python:** generic **Python 3.10** or newer installed. (Make sure to check "Add Python to PATH" during installation)
+-   **Git:** **Git for Windows** installed (Required to download core libraries).
 
 ## 🛠️ Installation & Setup
 
