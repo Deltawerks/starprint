@@ -1028,7 +1028,7 @@ class SCManager:
                 return None
                 
             dae_file = src_file.with_suffix(".dae")
-            if dae_file.exists():
+            if dae_file.exists() and dae_file.stat().st_size > 100:
                 return dae_file
             
             # Convert using DAE format (works with SC 4.5)
@@ -1056,6 +1056,12 @@ class SCManager:
                 continue
                 
             try:
+                # Validate DAE file is not empty/corrupt before loading
+                dae_size = dae_path.stat().st_size
+                if dae_size < 100:  # Minimal valid DAE is larger than 100 bytes
+                    print(f"  [Warning] Empty/corrupt DAE file ({dae_size} bytes): {geom_key}")
+                    continue
+                    
                 # Load DAE
                 mesh = trimesh.load(dae_path, force='scene')
                 
