@@ -2,14 +2,14 @@
 
 **The Star Citizen 3D Print Asset Extractor**
 
-StarPrint is a tool designed to extract clean, printable 3D models from Star Citizen game files. It handles the complex "assembly" of ships (merging landing gear, turrets, and doors) and outputs a single, clean `.obj` file ready for your slicer.
+StarPrint is a tool designed to extract clean, printable 3D models from Star Citizen game files. It focuses on **personal items** like armor, weapons, gadgets, and decorations - outputting clean `.obj` files ready for your slicer.
 
 > **Status:** Alpha/Testing
 > **Focus:** 3D Printing (No textures, no animation, minimal cleaning required)
 
 ## 🚀 Features
 
--   **Deep Assembly:** Logic to find and attach landing gear, turrets, and doors to ship hulls.
+-   **Personal Items:** Armor sets, FPS weapons, melee weapons, gadgets, flair, decorations, and more.
 -   **Clean Output:** Automatically strips lights, helpers, and material references.
 -   **Visual Library:** Generates 3D-rendered "holographic" thumbnails for your items.
 -   **Smart Filtering:** Hides hundreds of duplicate "skins" to show only unique geometries.
