@@ -983,14 +983,16 @@ class SCManager:
             # Fall back to legacy method
             return self.export_item(guid)
         
-        # 2. Extract RAW assets (no auto-conversion)
-        log_progress(2, 5, "Extraction & Manual Conversion...")
+        # 2. Extract assets WITH auto-conversion (like StarFab does)
+        # scdatatools' built-in conversion works with SC 4.5
+        log_progress(2, 5, "Extraction & Conversion (scdatatools)...")
         try:
-            # Extract raw files (cga, skin, etc.)
+            # Let scdatatools handle the conversion - it works with SC 4.5
             bp.extract(
                 outdir=export_path,
                 monitor=monitor,
-                auto_convert_models=False, 
+                auto_convert_models=True,  # Enable scdatatools' internal conversion
+                cgf_converter_bin=str(CGF_CONVERTER),  # Provide path to converter
                 skip_lods=True,
             )
             
