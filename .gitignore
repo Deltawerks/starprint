@@ -1,0 +1,34 @@
+# Virtual environment
+.venv/
+
+# Cache
+cache/
+*.pyc
+__pycache__/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Data and Exports
+exports/
+exports_test/
+blueprint_test_output/
+*.dae
+*.obj
+*.glb
+
+# Dev/Test/Reference (exclude large generated content)
+reference files/
+test_exports/
+test_thumb.png
+
+# Large binaries (user must download separately)
+tools/

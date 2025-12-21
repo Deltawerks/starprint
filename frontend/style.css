@@ -1,0 +1,593 @@
+/* StarPrint - Shade Studio Design System */
+/* Theme: Futuristic Utility / "Night Ops" */
+
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+    /* ------------------------------------------------------------------
+       3. Color Palette (Tailwind References)
+       ------------------------------------------------------------------ */
+
+    /* Backgrounds */
+    --bg-canvas: #020617;
+    /* Slate 950 - "Canvas (Dark)" */
+    --bg-panel: rgba(15, 23, 42, 0.7);
+    /* Slate 900 - "Panels (Dark)" */
+
+    /* Primary Accents (The "Delta" Blue/Cyan) */
+    --cyan-400: #22d3ee;
+    --cyan-500: #06b6d4;
+    --cyan-600: #0891b2;
+
+    --blue-400: #60a5fa;
+    --blue-500: #3b82f6;
+    --blue-600: #2563eb;
+    --blue-700: #1d4ed8;
+
+    /* Borders */
+    --border-neutral: #334155;
+    /* Slate 700 */
+    --border-tech: rgba(30, 58, 138, 0.3);
+    /* Blue 900/30 */
+    --border-active: #06b6d4;
+    /* Cyan 500 */
+
+    /* Typography */
+    --text-primary: #cbd5e1;
+    /* Slate 300 - For App Name/Body */
+    --text-highlight: #f8fafc;
+    /* Slate 50 - High contrast */
+    --text-muted: #64748b;
+    /* Slate 500 */
+
+    /* Status */
+    --status-success: #4ade80;
+    /* Green 400 */
+    --status-danger: #f87171;
+    /* Red 400 */
+    --status-rare: #fbbf24;
+    /* Amber 400 */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 5. UI Effects - Custom Slim Scrollbars (Global) */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #334155;
+    /* Slate 600 */
+    border-radius: 3px;
+    transition: background 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+    /* Slate 500 */
+}
+
+/* Corner handling */
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+body {
+    /* 2. Typography - Secondary Font for Body */
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-canvas);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow: hidden;
+
+    /* 5. UI Effects - Background Ambience */
+    background-image:
+        radial-gradient(circle at 20% 30%, rgba(6, 182, 212, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(37, 99, 235, 0.05) 0%, transparent 40%);
+}
+
+/* 2. Typography - Primary Font */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.ui-label,
+.btn-text,
+nav,
+.oxanium {
+    font-family: 'Oxanium', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    /* tracking-wide */
+}
+
+.mono {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+}
+
+/* ------------------------------------------------------------------
+   4.1. The Navigation Bar (DeltaHeader)
+   ------------------------------------------------------------------ */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    height: 64px;
+    width: 100%;
+
+    /* Background: Glassmorphic Dark */
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    /* backdrop-blur-sm */
+    -webkit-backdrop-filter: blur(4px);
+
+    /* Bottom Border: Dark */
+    border-bottom: 1px solid rgba(37, 99, 235, 0.3);
+    /* border-blue-600/30 */
+
+    display: flex;
+    align-items: center;
+    padding: 0 1.5rem;
+}
+
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.header-logo {
+    height: 32px;
+    width: auto;
+}
+
+.header-text-group {
+    display: flex;
+    align-items: baseline;
+    font-size: 1.5rem;
+    /* text-2xl */
+    letter-spacing: -0.025em;
+    /* tracking-tight */
+    line-height: 1;
+}
+
+.brand-delta {
+    font-family: 'Oxanium', sans-serif;
+    font-weight: 700;
+    color: var(--cyan-400);
+    /* text-cyan-300 in specs, using cyan-400 for better visibility */
+}
+
+.brand-werks {
+    font-family: 'Oxanium', sans-serif;
+    font-weight: 300;
+    color: var(--blue-400);
+}
+
+.brand-sep {
+    font-weight: 300;
+    color: rgba(37, 99, 235, 0.5);
+    /* text-blue-600/50 */
+    margin: 0 0.75rem;
+}
+
+.app-name {
+    font-family: 'Oxanium', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    /* tracking-wider */
+    color: var(--text-primary);
+    /* text-slate-300 */
+    font-weight: 300;
+    font-size: 1.25rem;
+}
+
+/* ------------------------------------------------------------------
+   Layout Structure
+   ------------------------------------------------------------------ */
+#main-screen {
+    display: flex;
+    height: calc(100vh - 64px);
+}
+
+/* ------------------------------------------------------------------
+   Sidebar
+   ------------------------------------------------------------------ */
+.sidebar {
+    width: 280px;
+    background: rgba(15, 23, 42, 0.2);
+    border-right: 1px solid rgba(30, 58, 138, 0.3);
+    /* border-blue-900/30 */
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Search Input - Styled as Input form spec */
+.search-container {
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    background: #1e293b;
+    /* bg-slate-800 */
+    border: 1px solid #475569;
+    /* border-slate-600 */
+    color: var(--text-highlight);
+    border-radius: 4px;
+    padding: 10px 12px 10px 40px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--blue-500);
+    /* focus:border-blue-500 */
+    box-shadow: 0 0 0 1px var(--blue-500);
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+}
+
+.sidebar h3 {
+    font-size: 0.75rem;
+    color: var(--cyan-400);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.sidebar-menu {
+    list-style: none;
+    overflow-y: auto;
+    /* Padding right for scrollbar clearance */
+    padding-right: 4px;
+}
+
+/* Sidebar Items matching "Tool Buttons" vibe */
+.sidebar-item {
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-family: 'Oxanium', sans-serif;
+    /* UI Label */
+    font-weight: 500;
+    transition: all 0.2s;
+    margin-bottom: 2px;
+    border: 1px solid transparent;
+}
+
+.sidebar-item:hover {
+    background: rgba(29, 78, 216, 0.2);
+    /* bg-blue-700/20 */
+    color: #93c5fd;
+    /* text-blue-300 */
+}
+
+.sidebar-item.active {
+    background: rgba(29, 78, 216, 0.2);
+    color: var(--cyan-400);
+    border: 1px solid rgba(29, 78, 216, 0.5);
+    /* border-blue-700 */
+}
+
+/* Sidebar item content layout */
+.sidebar-item-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.sidebar-item-name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Thumbnail generation button */
+.thumb-gen-btn {
+    background: transparent;
+    border: 1px solid var(--border-neutral);
+    color: var(--text-muted);
+    border-radius: 4px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    margin-left: 8px;
+}
+
+.thumb-gen-btn:hover {
+    background: rgba(6, 182, 212, 0.2);
+    border-color: var(--cyan-500);
+    color: var(--cyan-400);
+}
+
+.thumb-gen-btn:disabled {
+    cursor: wait;
+    opacity: 0.7;
+}
+
+.thumb-gen-btn.success {
+    background: rgba(74, 222, 128, 0.2);
+    border-color: var(--status-success);
+    color: var(--status-success);
+}
+
+
+/* ------------------------------------------------------------------
+   4.2. Paint Cards (The Grid Items)
+   ------------------------------------------------------------------ */
+.main-grid {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1.5rem;
+}
+
+.item-card {
+    /* Container */
+    background: #1e293b;
+    /* bg-slate-800 */
+    border: 1px solid #334155;
+    /* border-slate-700 */
+    border-radius: 6px;
+    /* rounded-md */
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    /* shadow-lg */
+}
+
+/* Hover State */
+.item-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--blue-500);
+    /* border-blue-500 */
+    box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.2);
+    /* shadow-blue-500/20 */
+}
+
+/* Swatch Area (Top) - Reused as Thumbnail area */
+.card-swatch {
+    height: 128px;
+    /* h-32 */
+    background: #0f172a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 2rem;
+    /* Metallic Effect Overlay */
+    background-image: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.05) 50%, transparent 100%);
+}
+
+.card-swatch img {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+}
+
+/* Footer Area (Bottom) */
+.card-footer {
+    background: rgba(15, 23, 42, 0.5);
+    /* bg-slate-900/50 */
+    padding: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.item-name {
+    font-family: 'Oxanium', sans-serif;
+    font-weight: 700;
+    /* Bold for name */
+    font-size: 0.85rem;
+    color: var(--text-highlight);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+}
+
+.item-code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+/* Selected State */
+.item-card.selected {
+    border-color: var(--cyan-400);
+    box-shadow: 0 0 0 1px var(--cyan-400);
+    /* ring-1 ring-cyan-400 */
+    transform: scale(1.02);
+}
+
+/* ------------------------------------------------------------------
+   Preview Panel (Right)
+   ------------------------------------------------------------------ */
+.preview-panel {
+    width: 380px;
+    background: rgba(15, 23, 42, 0.7);
+    /* Panels (Dark) */
+    backdrop-filter: blur(12px);
+    /* backdrop-blur-md for "Modals/Drawers" feel */
+    border-left: 1px solid rgba(30, 58, 138, 0.3);
+    /* border-blue-900/30 */
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.preview-header {
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(30, 58, 138, 0.3);
+    padding-bottom: 1rem;
+    background: rgba(15, 23, 42, 0.5);
+    /* bg-slate-900/50 */
+    margin: -2rem -2rem 1.5rem -2rem;
+    /* Stretch to edges */
+    padding: 1.5rem 2rem;
+}
+
+.preview-subtitle {
+    font-family: 'Oxanium', sans-serif;
+    color: var(--cyan-400);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.25rem;
+}
+
+.preview-title {
+    font-family: 'Oxanium', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--text-highlight);
+    text-transform: uppercase;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
+
+.preview-viewport {
+    flex: 1;
+    background: #000;
+    border: 1px solid var(--border-neutral);
+    border-radius: 6px;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+}
+
+.viewport-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(30, 58, 138, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30, 58, 138, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+    pointer-events: none;
+}
+
+/* 4.3. Action Buttons - Primary CTA */
+.btn-cta {
+    width: 100%;
+    height: 48px;
+    /* bg-gradient-to-r from-cyan-600 to-blue-700 */
+    background: linear-gradient(to right, #0891b2, #1d4ed8);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    /* border-blue-500/30 */
+    color: white;
+    font-family: 'Oxanium', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    /* tracking-wide */
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.btn-cta:hover {
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+    /* Cyan glow */
+}
+
+/* Utils */
+.hidden {
+    display: none !important;
+}
+
+.error {
+    color: var(--status-danger);
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+.placeholder-msg {
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 4rem;
+    font-style: italic;
+    opacity: 0.5;
+}
+
+/* Setup Screen - "Splash Screen" Vibe */
+#setup-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: var(--bg-canvas);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Background Ambience */
+    background-image:
+        radial-gradient(circle at 30% 40%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 70% 60%, rgba(37, 99, 235, 0.1) 0%, transparent 50%);
+}
+
+.setup-dialog {
+    width: 500px;
+    background: rgba(15, 23, 42, 0.95);
+    /* bg-slate-900/95 */
+    backdrop-filter: blur(12px);
+    /* backdrop-blur-md */
+    border: 1px solid rgba(30, 58, 138, 0.3);
+    border-radius: 12px;
+    padding: 3rem;
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.setup-title {
+    font-family: 'Oxanium', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--cyan-400);
+    margin-bottom: 0.5rem;
+}
