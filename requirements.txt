@@ -8,5 +8,6 @@ scdatatools @ git+https://gitlab.com/scmodding/frameworks/scdatatools.git@devel
 
 # 3D Processing & Thumbnails (let scdatatools manage numpy version)
 trimesh>=4.0.0
+pycollada>=0.8
 pillow>=10.0.0
 scipy>=1.11.0
